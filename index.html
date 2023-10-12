@@ -3,6 +3,18 @@
 <head>
   <title>mobile mockup generator by sjennon</title>
   <style>
+
+    :root {
+        --spacing-s: 8px;
+        --spacing-m: 16px;
+        --spacing-l: 60px;
+        --primary: #E0E4CD;
+        --body: black;
+        --secondary: #F3F5EB;
+        --rounded: 8px;
+        --round: 999px;
+        }
+
     body {
       font-family: Arial, Helvetica, sans-serif;
       text-align: center;
@@ -28,14 +40,15 @@
     }
 
     label {
-      background-color: black;
-      color: #fff;
+      background-color: var(--secondary);
+      color: var(--body);
       padding: 10px 20px;
       cursor: pointer;
+      border-radius: var(--rounded);
     }
     
     .image-upload {
-        background-color: #400DFF;
+        background-color: var(--primary);
     }
 
     #toggle {
@@ -43,17 +56,26 @@
     }   
 
     #export-button {
-      background-color: green;
-      color: #fff;
-      padding: 10px 20px;
+      background-color: var(--primary);
+      padding: var(--spacing-s) var(--spacing-m);
+      border-radius: var(--rounded);
       cursor: pointer;
       display: none;
+      text-decoration: none;
+      color: var(--body);
+    }
+
+    #phone-container {
+        background-color: var(--secondary);
+        padding: var(--spacing-m) var(--spacing-l) var(--spacing-m) var(--spacing-l);
+        border-radius: var(--rounded);
+
     }
 
     #uploaded-image {
       position: absolute;
-      top: 13px;
-      left: 21px;
+      top: 29px; /* + padding */
+      left: 81px; /* + padding */
       max-width: 360px;
       max-height: 800px;
       border-radius: 38px; /* Adjust the value to control the degree of rounding */
@@ -61,8 +83,8 @@
 
     #gesture-buttons {
       position: absolute;
-      bottom: 16px;
-      left: 20.5px;
+      bottom: 32px;
+      left: 80.5px;
       max-width: 360px;
       max-height: 80px;
       border-radius: 0px 0px 999px 999px;
