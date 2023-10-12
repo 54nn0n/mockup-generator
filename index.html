@@ -22,7 +22,6 @@
     #phone {
       max-width: 100%;
       border: 2px solid #333;
-      position: relative; /* Ensure the mockup image stays on top */
     }
 
     input[type="file"] {
@@ -43,15 +42,6 @@
       cursor: pointer;
       display: none;
     }
-
-    #uploaded-image {
-      position: absolute;
-      top: 14px;
-      left: 23px;
-      max-width: 360px;
-      max-height: 800px;
-      z-index: -1; /* Ensure the uploaded image appears behind the mockup */
-    }
   </style>
 </head>
 <body>
@@ -62,12 +52,12 @@
   </div>
   <div id="container">
     <label for="export-button">Export Mockup</label>
-    <a id="export-button" download="merged_mockup.png" href="#" onclick="exportMockup()">Export</a>
+    <a id="export-button" href="#" onclick="exportMockup()">Export</a>
   </div>
   <div id="container">
     <div id="phone-container">
       <img id="phone" src="img/mobileMockup.png" alt="Mobile Mockup">
-      <img id="uploaded-image" src="" alt="Uploaded Image">
+      <img id="uploaded-image" src="" alt="Uploaded Image" style="position: absolute; top: 14px; left: 23px; max-width: 360px; max-height: 800px;">
     </div>
   </div>
   <script>
@@ -95,15 +85,16 @@
       canvas.width = phone.width;
       canvas.height = phone.height;
 
+      // Draw the uploaded image
+      context.drawImage(uploadedImage, 14, 23, 360, 800);
+
       // Draw the mockup image
       context.drawImage(phone, 0, 0, canvas.width, canvas.height);
 
-      // Draw the uploaded image
-      context.drawImage(uploadedImage, 23, 14, 360, 800);
 
-      const downloadLink = document.getElementById("export-button");
+      // Convert the canvas to a Blob
       canvas.toBlob(function (blob) {
-        // Create a Blob object containing the merged image
+        // Create a URL for the Blob
         const url = URL.createObjectURL(blob);
 
         // Create an <a> element and set its attributes for downloading
@@ -113,7 +104,7 @@
 
         // Trigger a click event on the <a> element to start the download
         a.click();
-      });
+      }, "image/png");
     }
   </script>
 </body>
