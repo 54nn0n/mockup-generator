@@ -44,11 +44,20 @@
 
     #uploaded-image {
       position: absolute;
-      top: 12px;
-      left: 21px;
+      top: 13px;
+      left: 22px;
       max-width: 360px;
       max-height: 800px;
       border-radius: 38px; /* Adjust the value to control the degree of rounding */
+    }
+
+    #gesture-buttons {
+      position: absolute;
+      bottom: 16px;
+      left: 22px;
+      max-width: 360px;
+      max-height: 80px;
+      display: none; /* Initially hidden */
     }
   </style>
 </head>
@@ -59,16 +68,28 @@
     <input type="file" id="image-upload" accept="image/*">
   </div>
   <div id="container">
-    <label for "export-button">Export Mockup</label>
+    <label for="export-button">Export Mockup</label>
     <a id="export-button" href="#" onclick="exportMockup()">Export</a>
   </div>
   <div id="container">
     <div id="phone-container">
       <img id="phone" src="img/mobileMockup.png" alt="Mobile Mockup">
       <img id="uploaded-image" src="" alt="Uploaded Image">
+      <img id="gesture-buttons" src="img/gestureThreeButtons.png" alt="Gesture Buttons">
     </div>
   </div>
+  <div id="container">
+    <label for="toggle-gesture-buttons">Toggle Gesture Buttons</label>
+    <input type="checkbox" id="toggle-gesture-buttons" onchange="toggleGestureButtons()">
+  </div>
   <script>
+    function toggleGestureButtons() {
+      const gestureButtons = document.getElementById("gesture-buttons");
+      const toggleButton = document.getElementById("toggle-gesture-buttons");
+
+      gestureButtons.style.display = toggleButton.checked ? "block" : "none";
+    }
+
     document.getElementById("image-upload").addEventListener("change", function () {
       const fileInput = this;
       const uploadedImage = document.getElementById("uploaded-image");
@@ -87,14 +108,15 @@
     function exportMockup() {
       const phone = document.getElementById("phone");
       const uploadedImage = document.getElementById("uploaded-image");
+      const gestureButtons = document.getElementById("gesture-buttons");
       const canvas = document.createElement("canvas");
       const context = canvas.getContext("2d");
 
-      // Set the canvas dimensions to accommodate the entire image, including rounded corners
+      // Set the canvas dimensions to accommodate the entire image
       canvas.width = phone.width;
       canvas.height = phone.height;
 
-      // Draw the uploaded image with rounded corners
+      // Draw the uploaded image
       context.beginPath();
       context.moveTo(0, 0);
       context.lineTo(402, 0);
@@ -108,6 +130,11 @@
 
       // Draw the mockup image
       context.drawImage(phone, 0, 0, canvas.width, canvas.height);
+
+      // Draw gesture buttons if the toggle is on
+      if (document.getElementById("toggle-gesture-buttons").checked) {
+        context.drawImage(gestureButtons, 0, 720, 360, 80);
+      }
 
       // Convert the canvas to a Blob
       canvas.toBlob(function (blob) {
