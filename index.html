@@ -45,7 +45,7 @@
     #uploaded-image {
       position: absolute;
       top: 13px;
-      left: 22px;
+      left: 21px;
       max-width: 360px;
       max-height: 800px;
       border-radius: 38px; /* Adjust the value to control the degree of rounding */
@@ -54,9 +54,10 @@
     #gesture-buttons {
       position: absolute;
       bottom: 16px;
-      left: 22px;
+      left: 20.5px;
       max-width: 360px;
       max-height: 80px;
+      border-radius: 0px 0px 999px 999px;
       display: none; /* Initially hidden */
     }
   </style>
@@ -68,7 +69,6 @@
     <input type="file" id="image-upload" accept="image/*">
   </div>
   <div id="container">
-    <label for="export-button">Export Mockup</label>
     <a id="export-button" href="#" onclick="exportMockup()">Export</a>
   </div>
   <div id="container">
@@ -126,15 +126,15 @@
       context.closePath();
       context.clip();
 
-      context.drawImage(uploadedImage, 22, 13, 360, 800);
-
-      // Draw the mockup image
-      context.drawImage(phone, 0, 0, canvas.width, canvas.height);
+      context.drawImage(uploadedImage, 22, 12.5, 360, 800);
 
       // Draw gesture buttons if the toggle is on
       if (document.getElementById("toggle-gesture-buttons").checked) {
-        context.drawImage(gestureButtons, 0, 720, 360, 80);
+        context.drawImage(gestureButtons, 22, 771, 360, 42);
       }
+
+      // Draw the mockup image
+      context.drawImage(phone, 0, 0, canvas.width, canvas.height);
 
       // Convert the canvas to a Blob
       canvas.toBlob(function (blob) {
