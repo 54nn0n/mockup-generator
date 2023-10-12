@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mobile Mockup Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px;
+    }
+
+    #phone-container {
+      position: relative;
+    }
+
+    #phone {
+      max-width: 100%;
+      border: 2px solid #333;
+      position: relative; /* Ensure the mockup image stays on top */
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    label {
+      background-color: #3498db;
+      color: #fff;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    #export-button {
+      background-color: #27ae60;
+      color: #fff;
+      padding: 10px 20px;
+      cursor: pointer;
+      display: none;
+    }
+
+    #uploaded-image {
+      position: absolute;
+      top: 14px;
+      left: 23px;
+      max-width: 360px;
+      max-height: 800px;
+      z-index: -1; /* Ensure the uploaded image appears behind the mockup */
+    }
+  </style>
+</head>
+<body>
+  <h1>Mobile Mockup Generator</h1>
+  <div id="container">
+    <label for="image-upload">Upload an Image (360x800)</label>
+    <input type="file" id="image-upload" accept="image/*">
+  </div>
+  <div id="container">
+    <label for="export-button">Export Mockup</label>
+    <a id="export-button" download="merged_mockup.png" href="#" onclick="exportMockup()">Export</a>
+  </div>
+  <div id="container">
+    <div id="phone-container">
+      <img id="phone" src="img/mobileMockup.png" alt="Mobile Mockup">
+      <img id="uploaded-image" src="" alt="Uploaded Image">
+    </div>
+  </div>
+  <script>
+    document.getElementById("image-upload").addEventListener("change", function () {
+      const fileInput = this;
+      const uploadedImage = document.getElementById("uploaded-image");
+      const exportButton = document.getElementById("export-button");
+
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        uploadedImage.src = e.target.result;
+        exportButton.style.display = "block";
+      };
+
+      reader.readAsDataURL(fileInput.files[0]);
+    });
+
+    function exportMockup() {
+      const phone = document.getElementById("phone");
+      const uploadedImage = document.getElementById("uploaded-image");
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+
+      canvas.width = phone.width;
+      canvas.height = phone.height;
+
+      // Draw the mockup image
+      context.drawImage(phone, 0, 0, canvas.width, canvas.height);
+
+      // Draw the uploaded image
+      context.drawImage(uploadedImage, 23, 14, 360, 800);
+
+      const downloadLink = document.getElementById("export-button");
+      canvas.toBlob(function (blob) {
+        // Create a Blob object containing the merged image
+        const url = URL.createObjectURL(blob);
+
+        // Create an <a> element and set its attributes for downloading
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "merged_mockup.png";
+
+        // Trigger a click event on the <a> element to start the download
+        a.click();
+      });
+    }
+  </script>
+</body>
+</html>
