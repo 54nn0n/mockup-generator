@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mobile Mockup Generator</title>
+  <title>mobile mockup generator by sjennon</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       text-align: center;
     }
 
@@ -28,14 +28,22 @@
     }
 
     label {
-      background-color: #3498db;
+      background-color: black;
       color: #fff;
       padding: 10px 20px;
       cursor: pointer;
     }
+    
+    .image-upload {
+        background-color: #400DFF;
+    }
+
+    #toggle {
+        display: block;
+    }   
 
     #export-button {
-      background-color: #27ae60;
+      background-color: green;
       color: #fff;
       padding: 10px 20px;
       cursor: pointer;
@@ -63,10 +71,14 @@
   </style>
 </head>
 <body>
-  <h1>Mobile Mockup Generator</h1>
+  <h1>mobile mockup generator</h1>
   <div id="container">
-    <label for="image-upload">Upload an Image (360x800)</label>
+    <label for="image-upload" class="image-upload">upload an image (360x800)</label>
     <input type="file" id="image-upload" accept="image/*">
+  </div>
+  <div id="container toggle">
+    <label for="toggle-gesture-buttons">toggle navigation buttons</label>
+    <input type="checkbox" id="toggle-gesture-buttons" onchange="toggleGestureButtons()">
   </div>
   <div id="container">
     <a id="export-button" href="#" onclick="exportMockup()">Export</a>
@@ -77,10 +89,6 @@
       <img id="uploaded-image" src="" alt="Uploaded Image">
       <img id="gesture-buttons" src="img/gestureThreeButtons.png" alt="Gesture Buttons">
     </div>
-  </div>
-  <div id="container">
-    <label for="toggle-gesture-buttons">Toggle Gesture Buttons</label>
-    <input type="checkbox" id="toggle-gesture-buttons" onchange="toggleGestureButtons()">
   </div>
   <script>
     function toggleGestureButtons() {
