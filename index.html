@@ -3,17 +3,16 @@
 <head>
   <title>mobile mockup generator by sjennon</title>
   <style>
-
     :root {
-        --spacing-s: 8px;
-        --spacing-m: 16px;
-        --spacing-l: 60px;
-        --primary: #E0E4CD;
-        --body: black;
-        --secondary: #F3F5EB;
-        --rounded: 8px;
-        --round: 999px;
-        }
+      --spacing-s: 8px;
+      --spacing-m: 16px;
+      --spacing-l: 60px;
+      --primary: #E0E4CD;
+      --body: black;
+      --secondary: #F3F5EB;
+      --rounded: 8px;
+      --round: 999px;
+    }
 
     body {
       font-family: Arial, Helvetica, sans-serif;
@@ -48,11 +47,11 @@
     }
     
     .image-upload {
-        background-color: var(--primary);
+      background-color: var(--primary);
     }
 
     #toggle {
-        display: block;
+      display: block;
     }   
 
     #export-button {
@@ -65,20 +64,19 @@
       color: var(--body);
     }
 
-    #phone-container {
-        background-color: var(--secondary);
-        padding: var(--spacing-m) var(--spacing-l) var(--spacing-m) var(--spacing-l);
-        border-radius: var(--rounded);
-
+    #phone-container, #img-preview {
+      background-color: var(--secondary);
+      padding: var(--spacing-m) var(--spacing-l) var(--spacing-m) var(--spacing-l);
+      border-radius: var(--rounded);
     }
 
     #uploaded-image {
-      position: absolute;
-      top: 29px; /* + padding */
-      left: 81px; /* + padding */
+      /* position: absolute; */
+      /* top: 29px; /* + padding */
+      /* left: 81px; /* + padding */
       max-width: 360px;
       max-height: 800px;
-      border-radius: 38px; /* Adjust the value to control the degree of rounding */
+      border-radius: 16px; /* Adjust the value to control the degree of rounding */
     }
 
     #gesture-buttons {
@@ -88,7 +86,6 @@
       max-width: 360px;
       max-height: 80px;
       border-radius: 0px 0px 999px 999px;
-      display: none; /* Initially hidden */
     }
   </style>
 </head>
@@ -98,28 +95,23 @@
     <label for="image-upload" class="image-upload">upload an image (360x800)</label>
     <input type="file" id="image-upload" accept="image/*">
   </div>
-  <div id="container toggle">
-    <label for="toggle-gesture-buttons">toggle navigation buttons</label>
-    <input type="checkbox" id="toggle-gesture-buttons" onchange="toggleGestureButtons()">
+  <div id="container">
+    <a id="export-button" href="#" onclick="exportMockup()">export as mockup</a>
   </div>
   <div id="container">
-    <a id="export-button" href="#" onclick="exportMockup()">Export</a>
-  </div>
-  <div id="container">
-    <div id="phone-container">
+    <!-- <div id="phone-container">
       <img id="phone" src="img/mobileMockup.png" alt="Mobile Mockup">
       <img id="uploaded-image" src="" alt="Uploaded Image">
       <img id="gesture-buttons" src="img/gestureThreeButtons.png" alt="Gesture Buttons">
+    </div> -->
+    <div id="img-preview">
+      <p>Your image</p>
+      <img id="phone" src="img/mobileMockup.png" alt="Mobile Mockup" hidden>
+      <img id="uploaded-image" src="" alt="Uploaded Image">
+      <img id="gesture-buttons" src="img/gestureThreeButtons.png" alt="Gesture Buttons" hidden>
     </div>
   </div>
   <script>
-    function toggleGestureButtons() {
-      const gestureButtons = document.getElementById("gesture-buttons");
-      const toggleButton = document.getElementById("toggle-gesture-buttons");
-
-      gestureButtons.style.display = toggleButton.checked ? "block" : "none";
-    }
-
     document.getElementById("image-upload").addEventListener("change", function () {
       const fileInput = this;
       const uploadedImage = document.getElementById("uploaded-image");
@@ -156,12 +148,10 @@
       context.closePath();
       context.clip();
 
-      context.drawImage(uploadedImage, 22, 12.5, 360, 800);
+      context.drawImage(uploadedImage, 22, 12.5, 360, 759);
 
-      // Draw gesture buttons if the toggle is on
-      if (document.getElementById("toggle-gesture-buttons").checked) {
-        context.drawImage(gestureButtons, 22, 771, 360, 42);
-      }
+      // Always draw the gesture buttons
+      context.drawImage(gestureButtons, 22, 771, 360, 42);
 
       // Draw the mockup image
       context.drawImage(phone, 0, 0, canvas.width, canvas.height);
