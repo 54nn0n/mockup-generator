@@ -92,7 +92,7 @@
 <body>
   <h1>mobile mockup generator by sjennon</h1>
   <div id="container">
-    <label for="image-upload" class="image-upload">upload an image (360x800)</label>
+    <label for="image-upload" class="image-upload">upload an image (360x758)</label>
     <input type="file" id="image-upload" accept="image/*">
   </div>
   <div id="container">
@@ -138,15 +138,34 @@
       canvas.width = phone.width;
       canvas.height = phone.height;
 
-      // Draw the uploaded image
+       // Define the corner radius
+      const cornerRadius = 62; // Adjust this value as needed
+
+      // Start the uploaded image
       context.beginPath();
-      context.moveTo(0, 0);
-      context.lineTo(402, 0);
-      context.lineTo(402, 823);
-      context.lineTo(0, 823);
-      context.lineTo(0, 0);
+
+      // Draw the uploaded image
+      // context.moveTo(0, 0);
+      // context.lineTo(402, 0);
+      // context.lineTo(402, 823);
+      // context.lineTo(0, 823);
+      // context.lineTo(0, 0);
+
+      context.moveTo(0, cornerRadius);
+      context.lineTo(0, 823 - cornerRadius);
+      context.arcTo(0, 823, cornerRadius, 823, cornerRadius);
+      context.lineTo(402 - cornerRadius, 823);
+      context.arcTo(402, 823, 402, 823 - cornerRadius, cornerRadius);
+      context.lineTo(402, cornerRadius);
+      context.arcTo(402, 0, 402 - cornerRadius, 0, cornerRadius);
+      context.lineTo(cornerRadius, 0);
+      context.arcTo(0, 0, 0, cornerRadius, cornerRadius);
+
+      
+      // Close
       context.closePath();
       context.clip();
+      
 
       context.drawImage(uploadedImage, 22, 12.5, 360, 759);
 
